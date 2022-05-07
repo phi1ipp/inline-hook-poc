@@ -51,22 +51,19 @@ func main() {
 				return
 			}
 
-			inlineHookCommandValues := make([]InlineHookCommandValue, 1)
-			inlineHookCommandValue := InlineHookCommandValue{
-				Op:    "add",
-				Value: "test",
-				Path:  "/claims/alternate_login",
-			}
-			inlineHookCommandValues[0] = inlineHookCommandValue
-
-			commands := make([]InlineHookCommand, 1)
-			commands[0] = InlineHookCommand{
-				Type:  "com.okta.identity.patch",
-				Value: inlineHookCommandValues,
-			}
-
 			response := InlineHookResponse{
-				Commands: commands,
+				Commands: []InlineHookCommand{
+					{
+						Type: "com.okta.identity.patch",
+						Value: []InlineHookCommandValue{
+							{
+								Op:    "add",
+								Value: "AMILLER@ikea.com",
+								Path:  "/claims/alternate_login",
+							},
+						},
+					},
+				},
 			}
 
 			fmt.Printf("response: %+v\n", response)
