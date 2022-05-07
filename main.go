@@ -6,6 +6,11 @@ import (
 	"net/http"
 )
 
+func respondNoContent(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusNoContent)
+	w.Write([]byte(""))
+}
+
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
@@ -36,8 +41,7 @@ func main() {
 			if request.Data.Context.Protocol.Client.Id == "0oa17les1d6ssth6Z0h8" {
 				fmt.Println("got first client id, no login modification required")
 
-				w.WriteHeader(http.StatusNoContent)
-				w.Write([]byte(""))
+				respondNoContent(w)
 
 				return
 			}
@@ -45,8 +49,7 @@ func main() {
 			if request.Data.Context.Protocol.Client.Id != "0oa17lew5s1ocm7ov0h8" {
 				fmt.Println("got wrong client id, doing nothing")
 
-				w.WriteHeader(http.StatusNoContent)
-				w.Write([]byte(""))
+				respondNoContent(w)
 
 				return
 			}
